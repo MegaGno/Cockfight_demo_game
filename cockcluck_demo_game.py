@@ -121,7 +121,7 @@ SHOW_HITBOX = True
 # ==========================================
 
 total_score = 0
-
+WIN_SCORE = 300
 COOLDOWN_TIME = 1.0
 
 floating_texts = []
@@ -469,7 +469,79 @@ while cap.isOpened():
         4,
         cv2.LINE_AA
     )
+    # ======================================
+    # ตรวจสอบว่าชนะหรือยัง
+    # ======================================
 
+    if total_score >= WIN_SCORE:
+
+        # ให้คะแนนสูงสุดเป็น 300
+        total_score = WIN_SCORE
+
+        # ทำพื้นหลังมืดลงเล็กน้อย
+        overlay = frame.copy()
+
+        cv2.rectangle(
+            overlay,
+            (0, 0),
+            (w, h),
+            (0, 0, 0),
+            -1
+        )
+
+        frame = cv2.addWeighted(
+            overlay,
+            0.5,
+            frame,
+            0.5,
+            0
+        )
+
+        # YOU WIN
+        text = "YOU WIN!"
+
+        text_size = cv2.getTextSize(
+            text,
+            cv2.FONT_HERSHEY_SIMPLEX,
+            3,
+            8
+        )[0]
+
+        text_x = (w - text_size[0]) // 2
+        text_y = (h + text_size[1]) // 2
+
+        cv2.putText(
+            frame,
+            text,
+            (text_x, text_y),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            3,
+            (0, 255, 0),
+            8,
+            cv2.LINE_AA
+        )
+
+        # แสดงคะแนนสุดท้าย
+        cv2.putText(
+            frame,
+            f"SCORE: {total_score}",
+            (text_x + 60, text_y + 80),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1.3,
+            (255, 255, 255),
+            3,
+            cv2.LINE_AA
+        )
+
+        cv2.imshow(
+            'Cock Cluck - Demo Game',
+            frame
+        )
+
+        # แสดงหน้า YOU WIN 3 วินาที
+        cv2.waitKey(3000)
+
+        break
 
     # ======================================
     # แสดงภาพ
