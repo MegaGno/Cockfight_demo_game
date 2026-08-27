@@ -11,7 +11,7 @@ This project is create a game with computer vision
 
 ## How to play?
 
-1.Drag your finger to the hitbox to score
+1.Drag your finger to the hitbox to score(Use your index finger)
 
 2.Press H for show/hide hitbox
 
